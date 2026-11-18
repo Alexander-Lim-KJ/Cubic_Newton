@@ -1,6 +1,0 @@
-test_NewtonCR_NC.py output: 
-Dtype: NPC, Function value: tensor([1.3461], dtype=torch.float64), Gradient norm (relative): 0.43502932425995616, Outer iter: 0, Inner iter: 2, Step size: 0.03125
-Dtype: SOL, Function value: tensor([1.3299], dtype=torch.float64), Gradient norm (relative): 0.0647657197407039, Outer iter: 1, Inner iter: 4, Step size: 1
-Dtype: SOL, Function value: tensor([1.3296], dtype=torch.float64), Gradient norm (relative): 0.0017518118813597198, Outer iter: 2, Inner iter: 4, Step size: 1
-Dtype: SOL, Function value: tensor([1.3296], dtype=torch.float64), Gradient norm (relative): 1.3619176030507924e-06, Outer iter: 3, Inner iter: 4, Step size: 1
-Dtype: SOL, Function value: tensor([1.3296], dtype=torch.float64), Gradient norm (relative): 5.895110500581101e-11, Outer iter: 4, Inner iter: 4, Step size: 1
