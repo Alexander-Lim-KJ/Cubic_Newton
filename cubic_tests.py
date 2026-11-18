@@ -5,7 +5,7 @@ from NewtonCR_NC import NewtonCR_NC
 from GLRT import glrt, cubic_f
 
 # Problem parameters
-n = 5
+n = 100
 fk = torch.randn(1, dtype = torch.float64)
 gk = torch.randn(n, dtype = torch.float64)
 hk = torch.randn(n,n, dtype = torch.float64)
@@ -47,7 +47,7 @@ v = torch.zeros(n, dtype = torch.float64)
 options = glrt.initialize()
 
 # set some non-default options
-options['print_level'] = 1
+options['print_level'] = 2
 #print("options:", options)
 
 # load non-default options
@@ -61,6 +61,7 @@ v = v.numpy()
 hvk = hvk.numpy()
 i = 1
 res = {}
+M = M/2
 
 start = time.time()
 
@@ -92,3 +93,7 @@ with open("Results/Results_GLRT.txt","a") as f:
     f.write(f"Time taken: {end - start}\n")
 print("Gradient norm: ",torch.norm(torch.tensor(r))/torch.norm(gk))
 print("Time taken for GLRT: ", end - start)
+
+cf = fk + torch.dot(torch.tensor(gk), torch.tensor(x)) + torch.dot(torch.tensor(hvk), torch.tensor(x)) / 2 + M * (torch.norm(torch.tensor(x)) ** 3) / 3
+print("Function value: ", cf)
+
