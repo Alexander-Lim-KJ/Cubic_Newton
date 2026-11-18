@@ -28,7 +28,7 @@ def GDSolvesCubic(fk, gk, hk, M, eps = 1e-3, TMax = 10000):
     cfk, cgk = cubic_f(fk, gk, hk, yk, M, order = "01") # 2 oracle calls
     total_oracle = 1
     eta = 0.5 # can change later
-    with open("Results_GD.txt","w") as f:
+    with open("Results/Results_GD.txt","w") as f:
         f.write(f"test_GD.py output: \n")
 
     if torch.norm(cgk, torch.inf) < eps:
@@ -40,7 +40,7 @@ def GDSolvesCubic(fk, gk, hk, M, eps = 1e-3, TMax = 10000):
         yk = yk - eta * cgk
         eta *= 2
         cfk, cgk = cubic_f(fk, gk, hk, yk, M, order = "01")
-        with open("Results_GD.txt","a") as f:
+        with open("Results/Results_GD.txt","a") as f:
             f.write(f"Function value: {cfk}, Gradient norm (relative): {torch.norm(cgk)/gknorm}, Iteration: {i}, Step size: {eta}\n")
         if torch.norm(cgk) / gknorm  < eps:
             return yk, cfk, i + 2, 2 * total_oracle, torch.norm(cgk) / gknorm

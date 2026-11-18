@@ -6,7 +6,7 @@ def NewtonCR_NC(fk, gk, hk, alpha0, alpha_npc, M, gradtol, maxite, restol, inmax
     xk = torch.zeros_like(gk)
     gknorm = torch.norm(gk)
     cfk, cgk, chk = cubic_f(fk, gk, hk, xk, M, "012")
-    with open("Results_NewtonCR_NC.txt","w") as f:
+    with open("Results/Results_NewtonCR_NC.txt","w") as f:
         f.write(f"test_NewtonCR_NC.py output: \n")
     for k in range(maxite):
         pk, inite, dtype = CR_NPC(chk, -cgk, restol, inmaxite)
@@ -23,7 +23,7 @@ def NewtonCR_NC(fk, gk, hk, alpha0, alpha_npc, M, gradtol, maxite, restol, inmax
             return xk, cfk, cgk, chk, alphak, k, inite, dtype
         xk += alphak * pk
         cfk, cgk, chk = cubic_f(fk, gk, hk, xk, M, "012")
-        with open("Results_NewtonCR_NC.txt","a") as f:
+        with open("Results/Results_NewtonCR_NC.txt","a") as f:
             f.write(f"Dtype: {dtype}, Function value: {cfk}, Gradient norm (relative): {torch.norm(cgk)/gknorm}, Outer iter: {k}, Inner iter: {inite}, Step size: {alphak}\n")
 
 
