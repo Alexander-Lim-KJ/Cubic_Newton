@@ -66,10 +66,10 @@ if __name__ == "__main__":
     import torch
     from cubic_func import random_matrix_functional
     torch.manual_seed(42)
-    n = 10000
+    n = 100000
     gk = torch.randn(n, dtype = torch.float64) * 1e-3
     hk = lambda v : random_matrix_functional(10, n, v, 1e-6, "indef", seed=43)
-    M = 2
+    M = 0.1
 
     alpha0 = 1
     alpha_npc = 1

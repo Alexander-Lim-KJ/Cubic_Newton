@@ -3,17 +3,18 @@ import torch
 def random_matrix_functional(n, d, v, diag, mattype, seed):
     """
     Generate a random matrix functional based on a linear combination of random vectors.
+    ( H + diag I )(v)
     """
     torch.manual_seed(seed)
     if mattype == "indef":
-        linear_comb = torch.randn(n, dtype=torch.float64) * 1e-3
+        linear_comb = torch.randn(n, dtype=torch.float64) * 0.1
     elif mattype == "posdef":
-        linear_comb = torch.rand(n, dtype=torch.float64) * 1e-3
+        linear_comb = torch.rand(n, dtype=torch.float64) * 0.1
     else:
         raise ValueError("Invalid matrix type. Use 'indef' or 'posdef'.")
     w = torch.zeros(d, dtype=torch.float64)
     for i in range(n):
-        a = torch.randn(d, dtype=torch.float64) * 1e-3
+        a = torch.randn(d, dtype=torch.float64) * 0.1
         w += linear_comb[i] * torch.inner(a, v) * a
     w += diag * v
     return w
@@ -42,7 +43,7 @@ def cubic_f(fk, gk, hk, y, M, order = "01"):
         return cf, cg
     if "012" == order:
         cg = gk + hk_y + M * norm_y * y / 2
-        ch = lambda v : Av(hk, v) + M * (torch.inner(y, v) / (2 * norm_y) + norm_y * v / 2)
+        ch = lambda v : Av(hk, v) + M * (torch.inner(y, v) * y / (2 * norm_y) + norm_y * v / 2)
         return cf, cg, ch
 
 def Av(A , v):

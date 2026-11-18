@@ -30,7 +30,7 @@ def GDSolvesCubic(fk, gk, hk, M, eps = 1e-3, TMax = 10000):
     eta = 0.5 # can change later
     with open("Results/Results_GD.txt","w") as f:
         f.write(f"test_GD.py output: \n")
-
+    print(torch.norm(cgk, torch.inf))
     if torch.norm(cgk, torch.inf) < eps:
         return yk, cfk, 1, 2 * total_oracle, torch.norm(cgk, torch.inf)
     for i in range(TMax):
@@ -40,6 +40,7 @@ def GDSolvesCubic(fk, gk, hk, M, eps = 1e-3, TMax = 10000):
         yk = yk - eta * cgk
         eta *= 2
         cfk, cgk = cubic_f(fk, gk, hk, yk, M, order = "01")
+        print("Function value: ", cfk, "Gradient norm (relative): ", torch.norm(cgk)/gknorm, "Iteration: ", i, "Step size: ", eta)
         with open("Results/Results_GD.txt","a") as f:
             f.write(f"Function value: {cfk}, Gradient norm (relative): {torch.norm(cgk)/gknorm}, Iteration: {i}, Step size: {eta}\n")
         if torch.norm(cgk) / gknorm  < eps:
@@ -104,10 +105,9 @@ if __name__ == "__main__":
     import torch
     from cubic_func import random_matrix_functional
     torch.manual_seed(42)
-    n = 100
-    fk = torch.randn(1, dtype = torch.float64)
-    gk = torch.randn(n, dtype = torch.float64)
-    hk = lambda v : random_matrix_functional(n, n, seed=43, v=v)
+    n = 100000
+    gk = torch.randn(n, dtype = torch.float64) * 1e-3
+    hk = lambda v : random_matrix_functional(10, n, v, 1e-6, "posdef", seed=43)
     M = 5
 
-    GDSolvesCubic(fk, gk, hk, M, eps = 1e-3, TMax = 1000)
+    GDSolvesCubic(0.0, gk, hk, M, eps = 1e-6, TMax = 1000)
