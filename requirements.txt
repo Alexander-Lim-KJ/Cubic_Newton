@@ -1,3 +1,5 @@
-galahad==0.1.0.dev0
+# to install the dependencies, run:
+# pip install -r requirements.txt
+galahad-optrove
 numpy==2.5.5
 torch==2.13.0
